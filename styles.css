@@ -1,13 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     text-align: center;
+    font-family: "Work Sans", sans-serif;
+
 }
 
 header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #333;
     color: white;
-    padding: 20px;
+    height: 4em;
+    margin: 0;
+    padding: 5px;
+    font-size: smaller;
+    font-weight: 200;
+    font-family: "Rock Salt";
 }
 
 main {
@@ -15,6 +30,11 @@ main {
     flex-direction: column;
     align-items: center;
     margin: 20px;
+    
+}
+
+h1{
+    margin: 0;
 }
 
 .board {
@@ -37,6 +57,7 @@ main {
     padding: 2em 1em;
     text-align: left;
     word-wrap: break-word;
+
 }
 
 .note:hover {
@@ -56,12 +77,24 @@ main {
 
 
 button#addNote {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 20px;
+    display: inline-block;
+    outline: 0;
     cursor: pointer;
+    border: 2px solid #000;
+    border-radius: 4px;
+    color: #fff;
+    background: #000;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 1rem;
+    padding: 0.5em;
+    font-family: "Work Sans", sans-serif;
+
+    &:hover{
+        color: #000;
+        background: #ffcc00;
+    }
+    
 }
 
 .delete-button {
@@ -76,6 +109,35 @@ button#addNote {
 }
 
 #deleteAllNotes{
-    margin: 1em;
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    border: 2px solid #ff0000;
+    border-radius: 4px;
+    color: #000000;
+    background: #ffffff;
+    font-size: 1rem;
+    font-weight: 100;
+    
+
+    &:hover{
+        color: #ffffff;
+        background: #ff0000;
+    }
 }
 
+
+
+/*Language button*/
+
+#changeLanguage{
+    position: absolute;
+    right: 2em;
+    cursor: pointer;
+    border-radius: 10px;
+    background: none;
+    color: beige;
+    font-family: "Work Sans", sans-serif;
+
+    
+}

@@ -71,3 +71,42 @@ loadNotes();
 
 
 
+//CHANGE LANGUAGE
+
+// Objeto con las traducciones
+const translations = {
+    en: {
+        title: "Note Board",
+        addNote: "Add note",
+        deleteAllNotes: "Delete all notes",
+        languageButton: "ES"
+    },
+    es: {
+        title: "Tablón de Notas",
+        addNote: "Añadir nota",
+        deleteAllNotes: "Borrar todas las notas",
+        languageButton: "EN"
+    }
+};
+
+let currentLanguage = 'en';
+
+function changeLanguage() {
+    currentLanguage = currentLanguage === 'en' ? 'es' : 'en';
+    updateTexts();
+}
+
+function updateTexts() {
+    document.getElementById('title').textContent = translations[currentLanguage].title;
+    document.getElementById('addNote').textContent = translations[currentLanguage].addNote;
+    document.getElementById('deleteAllNotes').textContent = translations[currentLanguage].deleteAllNotes;
+    
+    const buttonContent = `<i class="fa-solid fa-globe"></i> ${translations[currentLanguage].languageButton}`;
+    document.querySelector('#changeLanguage .button-content').innerHTML = buttonContent;
+    
+    document.documentElement.lang = currentLanguage;
+}
+
+document.getElementById('changeLanguage').addEventListener('click', changeLanguage);
+
+document.addEventListener('DOMContentLoaded', updateTexts);
