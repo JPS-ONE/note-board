@@ -66,8 +66,9 @@ deleteAllNotesButton.addEventListener('click', () => {
     }
 });
 
-// Load notes from localStorage when the page is loaded
+
 document.addEventListener('DOMContentLoaded', loadNotes);
+
 
 // Language change functionality
 
@@ -91,9 +92,21 @@ let currentLanguage = 'en';
 function changeLanguage() {
     currentLanguage = currentLanguage === 'en' ? 'es' : 'en';
     updateTexts();
+    saveLanguage(); 
 }
 
+function saveLanguage() {
+    localStorage.setItem('language', currentLanguage);
+}
 
+function loadLanguage() {
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage) {
+        currentLanguage = savedLanguage;
+    } else {
+        currentLanguage = 'en';
+    }
+}
 
 function updateTexts() {
     document.getElementById('title').textContent = translations[currentLanguage].title;
@@ -108,4 +121,8 @@ function updateTexts() {
 
 document.getElementById('changeLanguage').addEventListener('click', changeLanguage);
 
-document.addEventListener('DOMContentLoaded', updateTexts);
+document.addEventListener('DOMContentLoaded', () => {
+    loadLanguage();
+    updateTexts();
+});
+
