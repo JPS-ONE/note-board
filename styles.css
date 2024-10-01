@@ -132,12 +132,12 @@ button#addNote {
 
 #changeLanguage{
     position: absolute;
-    right: 2em;
+    right: 1em;
     cursor: pointer;
     border-radius: 10px;
     background: none;
     color: beige;
     font-family: "Work Sans", sans-serif;
-
+    font-size: smaller;
     
 }
