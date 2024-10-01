@@ -1,79 +1,76 @@
 const board = document.querySelector('.board');
 const addNoteButton = document.getElementById('addNote');
 
-addNoteButton.addEventListener('click', () => {
+function createNote(content = '') {
     const note = document.createElement('div');
     note.classList.add('note');
 
     const textElement = document.createElement('div');
-
-    textElement.classList.add('note-text'); 
+    textElement.classList.add('note-text');
     textElement.contentEditable = true;
     textElement.setAttribute('placeholder', 'Escribe tu nota aquí');
+    textElement.textContent = content;
 
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('delete-button');
     deleteButton.innerHTML = 'x';
 
-    deleteButton.addEventListener('click', () => {    
+    deleteButton.addEventListener('click', () => {
         board.removeChild(note);
-        saveNotes();
+        saveNotes(); 
     });
+
+    // Update the note content on input event
+    textElement.addEventListener('input', saveNotes);
 
     note.appendChild(textElement);
     note.appendChild(deleteButton);
-    board.prepend(note);
 
-    // Focus when note is created
-    textElement.focus(); 
+    board.appendChild(note);
+
+    textElement.focus(); //Focus on the new note
     
-    
+}
+
+function saveNotes() {
+    const notes = [];
+    document.querySelectorAll('.note-text').forEach(note => {
+        notes.push(note.textContent);
+    });
+    localStorage.setItem('notes', JSON.stringify(notes));
+}
+
+function loadNotes() {
+    const notes = JSON.parse(localStorage.getItem('notes'));
+    if (notes && Array.isArray(notes)) {
+        // Clear the board before loading notes
+        board.innerHTML = '';
+
+        notes.forEach(noteContent => {
+            createNote(noteContent);
+        });
+    }
+}
+
+addNoteButton.addEventListener('click', () => {
+    createNote();
     saveNotes();
 });
 
-
-
-
 const deleteAllNotesButton = document.getElementById('deleteAllNotes');
-
 deleteAllNotesButton.addEventListener('click', () => {
-
     const confirmation = window.confirm('¿Estás seguro de que deseas eliminar todas las notas?');
-
-    if(confirmation){
-        const notes = document.querySelectorAll('.note');
-        notes.forEach((note) => {
-            board.removeChild(note);
-        });
+    if (confirmation) {
+        board.innerHTML = '';
+        localStorage.removeItem('notes');
     }
-
-    // Clear localstorage
-    localStorage.removeItem('notes');
 });
 
+// Load notes from localStorage when the page is loaded
+document.addEventListener('DOMContentLoaded', loadNotes);
 
-// Load notes from localstorage
-function loadNotes() {
-    const notes = localStorage.getItem('notes');
-    if (notes) {
-        board.innerHTML = notes;
-    }
-}
+// Language change functionality
 
-// Save notes on localstorage
-function saveNotes() {
-    const notes = board.innerHTML;
-    localStorage.setItem('notes', notes);
-}
-
-//Load notes at start
-loadNotes();
-
-
-
-//CHANGE LANGUAGE
-
-// Objeto con las traducciones
 const translations = {
     en: {
         title: "Note Board",
@@ -96,14 +93,16 @@ function changeLanguage() {
     updateTexts();
 }
 
+
+
 function updateTexts() {
     document.getElementById('title').textContent = translations[currentLanguage].title;
     document.getElementById('addNote').textContent = translations[currentLanguage].addNote;
     document.getElementById('deleteAllNotes').textContent = translations[currentLanguage].deleteAllNotes;
-    
+
     const buttonContent = `<i class="fa-solid fa-globe"></i> ${translations[currentLanguage].languageButton}`;
     document.querySelector('#changeLanguage .button-content').innerHTML = buttonContent;
-    
+
     document.documentElement.lang = currentLanguage;
 }
 
